@@ -1,0 +1,11 @@
+2009-03-25 Felix Oghina <znupi69 @at@ gmail .dot. com>
+
+* Twitter.class.php (Twitter->update):
+o Added more error checking:
+	o Check if data sending fails *or* if not all data was sent
+	o Check for errors while reading data
+	o Check for HTTP errors (for example a Twitter 500 Internal Server Error is now caught)
+o Data is now actually POSTed, not GETed.
+
+* Twitter.class.php4: Added this file which works on PHP4 (thanks Francois Tornier
+for testing this)
