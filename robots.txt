@@ -1,0 +1,5 @@
+User-Agent: *
+Sitemap: /sitemap.xml
+Disallow: /tareas/
+Disallow: /includes/
+Disallow: /plantillas/

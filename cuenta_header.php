@@ -1,0 +1,2 @@
+<font size="4"><b><a href="<?=$h->getHost()?>">clasilistados</a>&nbsp;&gt;&nbsp;<?=$titulo?></b></font>
+<font size="2">&nbsp;&nbsp;&nbsp; [<a href="<?=$h->getMiCuenta.'?a=salir'?>">salir de la cuenta</a>]&nbsp;&nbsp; [<a href="<?=$h->getMiCuenta.'?a=pref'?>">preferencias</a>]&nbsp;&nbsp; [<a href="<?=$h->getAyudaLinkHref()?>">páginas de ayuda</a>]&nbsp;&nbsp;[<strong><a href="<?=$h->getMiCuentaLink()?>">página de la cuenta</a></strong>]</font>

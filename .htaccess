@@ -1,0 +1,325 @@
+RewriteEngine On
+Options +FollowSymLinks
+RewriteBase /
+
+RedirectMatch 404 /\\.svn(/|$)
+
+#para que todo vaya a clasilistados.org
+RewriteCond %{HTTP_HOST} !^clasilistados\.net$ [NC]
+RewriteRule ^(.*)$ http://clasilistados.net/$1 [R=301,L]
+
+#([a-z_-]+) solo letras
+#([0-9]+) solo numeros
+# Make PHP code look like unknown types
+AddType application/x-httpd-php .html
+
+#Si la url solicitada no es un fichero(existente), continuar...
+RewriteCond %{REQUEST_FILENAME} !-f 
+
+#Si la url solicitada no es una carpeta(existente), continuar...
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+#AuthType Basic  
+#AuthName tareas/
+#AuthUserFile /etc/.htpasswd  
+#Require user alejandro
+
+
+
+
+RewriteRule ^(.*)\.html$ $1.php [nc]
+
+# Files to ignore.
+RewriteRule ^index\.php|^cl.css$ - [L]
+
+# Directories to ignore.
+RewriteRule ^(lib|shared|css|img|js|eventos|error)(/.*)?$ - [L] 
+
+Rewriterule ^imagen/(.*).jpg imagenes.php?imagen=$1 [L,QSA]
+Rewriterule ^mi-cuenta/usuario/id-([0-9]+)/c-(.*)/email-(.*)$ micuenta.php?id=$1&cod_seguridad=$2&cambiaContrasena=1&email=$3 [L,QSA]
+Rewriterule ^mi-cuenta/crear$ crearcuenta.php [L,QSA]
+Rewriterule ^mi-cuenta$ micuenta.php?login=1   [L,QSA]
+Rewriterule ^mi-cuenta/reiniciar_contrasena$ reiniciar_contrasena.php [L,QSA]
+Rewriterule ^mi-cuenta/admin/anuncio/id-([0-9]+)/cat-([0-9]+)$ admin_anuncio.php?id=$1&catid=$2 [L,QSA]
+
+Rewriterule ^envia-anuncio-a-un-amigo/([0-9]+)/([0-9]+)$ envia_amigo.php?id=$1&catid=$2 [L,QSA]
+Rewriterule ^captchaimg/(.*)/(.*)$ captcha.php?c1=$2&c2=$1 [L,QSA]
+Rewriterule ^flag$ flag.php [L,QSA]
+Rewriterule ^admin/anuncio/republicar/id-([0-9]+)/cat-([0-9]+)/c-(.*)$ admin_anuncio.php?id=$1&catid=$2&c=$3&republicar=1 [L,QSA]
+Rewriterule ^admin/anuncio/id-([0-9]+)/cat-([0-9]+)/c-(.*)$ admin_anuncio.php?id=$1&catid=$2&c=$3 [L,QSA]
+Rewriterule ^sitemap.xml$ sitemap.php [L,QSA]
+
+
+Rewriterule ^ajax(.*)$ ajax.php [L,QSA]
+
+#a nivel ciudad
+
+Rewriterule ^q/(.*)/(.*)/(.*)/categoria-([0-9]+)$ listados.php?busqueda=$3&cat=$4&ciudad=$2 [L,QSA]
+Rewriterule ^q/(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)$ listados.php?busqueda=$3&subcat=$5&ciudad=$2&cat=$4 [L,QSA]
+
+#a nivel estado
+
+Rewriterule ^q/(.*)/(.*)/categoria-([0-9]+)$ listados.php?busqueda=$2&cat=$3&estado=$1 [L,QSA]
+Rewriterule ^q/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)$ listados.php?busqueda=$2&subcat=$4&estado=$1&cat=$3 [L,QSA]
+
+Rewriterule ^listado/estado-(.*)/(.*)/categoria-(.*)$ listados.php?ciudad=$1&cat=$3 [L,QSA]
+Rewriterule ^listado/ciudad-(.*)/(.*)/categoria-(.*)$ listados.php?ciudad=$1&cat=$3 [L,QSA]
+Rewriterule ^buscar/(.*)$ listados.php [L,QSA]
+
+Rewriterule ^contacto$ contactanos.php [L,QSA]
+Rewriterule ^privacidad$ privacidad.php [L,QSA]
+Rewriterule ^seguridad$ seguridad.php [L,QSA]
+Rewriterule ^prohibido-anunciar$ prohibido_anunciar.php [L,QSA]
+Rewriterule ^track$ track.php [L,QSA]
+
+
+Rewriterule ^asociarse-con-clasilistados/enviar-anuncios/cat-([0-9]+)$ fuentes.php?cat=$1 [L,QSA]
+Rewriterule ^asociarse-con-clasilistados$ asociarse.php [L,QSA]
+
+
+Rewriterule (.*)foros-de-debate$ index.php [L,QSA]
+Rewriterule ^legal-abusos-ayuda$ contactanos.php [L,QSA]
+Rewriterule ^legal-abusos-ayuda/pagando-con-tarjeta-de-credito$ pagandocontarjeta.php [L,QSA]
+Rewriterule ^legal-abusos-ayuda/numeros-de-verificacion-tarjeta-de-credito$ numerosdeverificacion.php [L,QSA]
+Rewriterule ^legal-abusos-ayuda/codigo-promocion$ promotioncode.php [L,QSA]
+Rewriterule ^legal-abusos-ayuda/mejorar-visibilidad-anuncio$ urgdest.php [L,QSA]
+Rewriterule ^lo-mejor-de-clasilistados$ lomejor.php [L,QSA]
+Rewriterule ^masciudades$ masciudades.php [L,QSA]
+#Rewriterule ^fraudes$ listing.php [L,QSA]
+#Rewriterule ^preguntas-frecuentes$ listing.php [L,QSA]
+Rewriterule ^acerca-de-clasilistados$ acercade.php [L,QSA]
+Rewriterule ^estamos-contratando$ estamos-contratando.php [L,QSA]
+Rewriterule ^condiciones$ condiciones.php [L,QSA]
+Rewriterule ^sitios$ sitios.php [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)--cat-10(.*)$ index.php [L,QSA]
+Rewriterule ^(.*)/(.*)--cat-10(.*)$ index.php [L,QSA]
+AddDefaultCharset UTF-8 
+
+#CAMBIAR TODO LA NAVEGACION A UN MODO MAS GENERICOM, SIN DEPENDER DE LA LOCACION.
+Rewriterule ^id-([0-9]+)-cat-([0-9]+)$ item.php?id=$1&cat=$2 [L,QSA]
+
+
+Rewriterule ^publicar-anuncios$ publicar.php [L,QSA]
+
+#Rewriterule ^(.*)/(.*)/publicar-anuncios/public_cat-([0-9]+) publicar.php?ciudad=$2&cat=$3 [L,QSA]
+#Rewriterule ^(.*)/publicar-anuncios/public_cat-([0-9]+)$ publicar.php?estado=$1&cat=$2 [L,QSA]
+
+
+Rewriterule ^(.*)/(.*)/publicar-anuncios/public_(.*)$ formposting.php?ciudad=$2&opciones=$3 [L,QSA]
+Rewriterule ^(.*)/publicar-anuncios/public_(.*)$  formposting.php?estado=$1&opciones=$2 [L,QSA]
+
+Rewriterule ^(.*)/(.*)/publicar-anuncios$ publicar.php?ciudad=$2 [L,QSA]
+#Rewriterule ^(.*)/(.*)/publicar-anuncios/(.*)/subcategoria-([0-9]+)$ formposting.php?ciudad=$2&subcat=$4 [L,QSA]
+
+Rewriterule ^(.*)/publicar-anuncios$ publicar.php?estado=$1 [L,QSA]
+#Rewriterule ^(.*)/publicar-anuncios/(.*)/subcategoria-([0-9]+)$ formposting.php?estado=$1&subcat=$3 [L,QSA]
+
+
+
+#a nivel ciudad
+
+Rewriterule ^(.*)/(.*)/(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)-id-([0-9]+)$ item.php?ciudad=$2&subcat=$7&estado=$1&id=$8&cat=$6 [L,QSA]
+
+Rewriterule ^(.*)/(.*)/urgente-(.*)/categoria-([0-9]+)$ listados.php?ciudad=$2&cat=$4&urg=1 [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)/categoria-([0-9]+)/([0-9]+)$ listados.php?ciudad=$2&cat=$4&p=$5 [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)/categoria-([0-9]+)$ listados.php?ciudad=$2&cat=$4 [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)/categoria-([0-9]+)/(.*)rss$ rss.php?ciudad=$2&cat=$4 [L,QSA]
+
+Rewriterule ^(.*)/(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)/([0-9]+)$ listados.php?ciudad=$2&cat=$5&subcat=$6&p=$7 [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)$ listados.php?ciudad=$2&cat=$5&subcat=$6 [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)/(.*)rss$ rss.php?ciudad=$2&cat=$5&subcat=$6 [L,QSA]
+
+Rewriterule ^(.*)/(.*)/eventos/(.*)/([0-9]+)$ listados.php?ciudad=$2&fecha=$3&cat=11&p=$4 [L,QSA]
+Rewriterule ^(.*)/(.*)/eventos/(.*)$ listados.php?ciudad=$2&fecha=$3&cat=11 [L,QSA]
+Rewriterule ^(.*)/(.*)/eventos/(.*)/(.*)rss$ rss.php?ciudad=$2&fecha=$3&cat=11 [L,QSA]
+
+#a nivel estado
+
+Rewriterule ^(.*)/(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)-id-([0-9]+)$ item.php?subcat=$6&estado=$1&id=$7&cat=$5 [L,QSA]
+
+Rewriterule ^(.*)/urgente-(.*)/categoria-([0-9]+)$ listados.php?estado=$1&cat=$3&urg=1 [L,QSA]
+Rewriterule ^(.*)/(.*)/categoria-([0-9]+)/([0-9]+)$ listados.php?cat=$3&estado=$1&p=$4 [L,QSA]
+Rewriterule ^(.*)/(.*)/categoria-([0-9]+)$ listados.php?cat=$3&estado=$1 [L,QSA]
+Rewriterule ^(.*)/(.*)/categoria-([0-9]+)/(.*)rss$ rss.php?cat=$3&estado=$1 [L,QSA]
+
+Rewriterule ^(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)/([0-9]+)$ listados.php?cat=$4&subcat=$5&estado=$1&p=$6 [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)$ listados.php?cat=$4&subcat=$5&estado=$1 [L,QSA]
+Rewriterule ^(.*)/(.*)/(.*)/categoria-([0-9]+)-subcategoria-([0-9]+)/rss$ rss.php?cat=$4&subcat=$5&estado=$1 [L,QSA]
+
+Rewriterule ^(.*)/eventos/(.*)/([0-9]+)$ listados.php?estado=$1&fecha=$2&cat=11&p=$3 [L,QSA]
+Rewriterule ^(.*)/eventos/(.*)$ listados.php?estado=$1&fecha=$2&cat=11 [L,QSA]
+Rewriterule ^(.*)/eventos/(.*)/(.*)rss$ rss.php?estado=$1&fecha=$2&cat=11 [L,QSA]
+
+#REDIRECCIONA DE LAS VIEJAS URL DE LA CIUDAD A LAS NUEVAS
+
+#Rewriterule ^(.*)/(.*)/(.*)--cat-([0-9]+)$ listados.php?ciudad=$2&cat=$4&estado=$1 [L,QSA]
+RedirectMatch 301  ^(.*)/(.*)/(.*)--cat-([0-9]+)$  $1/$2/$3/categoria-$4
+
+#Rewriterule ^(.*)/(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)$ listados.php?ciudad=$2&cat=$4&subcat=$6&estado=$1 [L,QSA]
+RedirectMatch 301 ^(.*)/(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)$  $1/2/$3/$5/categoria-$4-subcategoria-$6
+
+#Rewriterule ^(.*)/(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)/(.*)--id-([0-9]+)$ item.php?ciudad=$2&subcat=$6&estado=$1&id=$8&cat=$4 [L,QSA]
+RedirectMatch 301  ^(.*)/(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)/(.*)--id-([0-9]+)$ $1/$2/$3/$5/$7/categoria-$4-subcategoria-$6-id-$8
+
+#REDIRECCIONA DE LAS VIEJAS URL DEL ESTADO A LAS NUEVAS
+
+#Rewriterule ^(.*)/(.*)--cat-([0-9]+)$ listados.php?cat=$3&estado=$1 [L,QSA]
+RedirectMatch 301  ^(.*)/(.*)--cat-([0-9]+)$  $1/$2/categoria-$3
+
+#Rewriterule ^(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)$ listados.php?cat=$3&subcat=$5&estado=$1 [L,QSA]
+RedirectMatch 301  ^(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)$  $1/$2/$4/categoria-$3-subcategoria-$5 
+
+#Rewriterule ^(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)/(.*)--id-([0-9]+)$ item.php?subcat=$7&estado=$1&id=$7&cat=$3 [L,QSA]
+RedirectMatch 301  ^(.*)/(.*)--cat-([0-9]+)/(.*)--subcat-([0-9]+)/(.*)--id-([0-9]+)$  $1/$2/$4/$6/categoria-$3-subcategoria-$5-id-$7
+
+
+Rewriterule ^alabama/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^alabama$ selecciudad.php?estado=alabama [L,QSA]
+
+Rewriterule ^arizona/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^arizona$ selecciudad.php?estado=arizona [L,QSA]
+
+Rewriterule ^arkansas/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^arkansas$ selecciudad.php?estado=arkansas [L,QSA]
+
+Rewriterule ^california/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^california$ selecciudad.php?estado=california [L,QSA]
+
+Rewriterule ^colorado/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^colorado$ selecciudad.php?estado=colorado [L,QSA]
+
+Rewriterule ^connecticut/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^connecticut$ selecciudad.php?estado=connecticut [L,QSA]
+
+Rewriterule ^districtofcolumbia/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^districtofcolumbia$ selecciudad.php?estado=districtofcolumbia [L,QSA]
+
+Rewriterule ^florida/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^florida$ selecciudad.php?estado=florida [L,QSA]
+
+Rewriterule ^georgia/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^georgia$ selecciudad.php?estado=georgia [L,QSA]
+
+Rewriterule ^idaho/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^idaho$ selecciudad.php?estado=idaho [L,QSA]
+
+Rewriterule ^illinois/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^illinois$ selecciudad.php?estado=illinois [L,QSA]
+
+Rewriterule ^indiana/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^indiana$ selecciudad.php?estado=indiana [L,QSA]
+
+Rewriterule ^iowa/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^iowa$ selecciudad.php?estado=iowa [L,QSA]
+
+Rewriterule ^kansas/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^kansas$ selecciudad.php?estado=kansas [L,QSA]
+
+Rewriterule ^kentucky/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^kentucky$ selecciudad.php?estado=kentucky [L,QSA]
+
+Rewriterule ^louisiana/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^louisiana$ selecciudad.php?estado=louisiana [L,QSA]
+
+Rewriterule ^maryland/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^maryland$ selecciudad.php?estado=maryland [L,QSA]
+
+Rewriterule ^massachusetts/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^massachusetts$ selecciudad.php?estado=massachusetts [L,QSA]
+
+Rewriterule ^michigan/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^michigan$ selecciudad.php?estado=michigan [L,QSA]
+
+Rewriterule ^minnesota/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^minnesota$ selecciudad.php?estado=minnesota [L,QSA]
+
+Rewriterule ^mississippi/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^mississippi$ selecciudad.php?estado=mississippi [L,QSA]
+
+Rewriterule ^missouri/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^missouri$ selecciudad.php?estado=missouri [L,QSA]
+
+Rewriterule ^nebraska/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^nebraska$ selecciudad.php?estado=nebraska [L,QSA]
+
+Rewriterule ^nevada/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^nevada$ selecciudad.php?estado=nevada [L,QSA]
+
+Rewriterule ^newjersey/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^newjersey$ selecciudad.php?estado=newjersey [L,QSA]
+
+Rewriterule ^newmexico/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^newmexico$ selecciudad.php?estado=newmexico [L,QSA]
+
+Rewriterule ^newyorkstate/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^newyorkstate$ selecciudad.php?estado=newyorkstate [L,QSA]
+
+Rewriterule ^northcarolina/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^northcarolina$ selecciudad.php?estado=northcarolina [L,QSA]
+
+Rewriterule ^northdakota/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^northdakota$ selecciudad.php?estado=northdakota [L,QSA]
+
+Rewriterule ^ohio/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^ohio$ selecciudad.php?estado=ohio [L,QSA]
+
+Rewriterule ^oklahoma/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^oklahoma$ selecciudad.php?estado=oklahoma [L,QSA]
+
+Rewriterule ^oregon/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^oregon$ selecciudad.php?estado=oregon [L,QSA]
+
+Rewriterule ^pennsylvania/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^pennsylvania$ selecciudad.php?estado=pennsylvania [L,QSA]
+
+Rewriterule ^rhodeisland$ index.php?estado=rhodeisland [L,QSA]
+
+Rewriterule ^southcarolina/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^southcarolina$ selecciudad.php?estado=southcarolina [L,QSA]
+
+Rewriterule ^tennessee/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^tennessee$ selecciudad.php?estado=tennessee [L,QSA]
+
+Rewriterule ^texas/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^texas$ selecciudad.php?estado=texas [L,QSA]
+
+Rewriterule ^utah/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^utah$ selecciudad.php?estado=utah [L,QSA]
+
+Rewriterule ^virginia/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^virginia$ selecciudad.php?estado=virginia [L,QSA]
+
+Rewriterule ^westvirginia/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^westvirginia$ selecciudad.php?estado=westvirginia [L,QSA]
+
+Rewriterule ^wisconsin/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^wisconsin$ selecciudad.php?estado=wisconsin [L,QSA]
+
+Rewriterule ^washington/(.*)$ index.php?ciudad=$1 [L,QSA]
+Rewriterule ^washington$ selecciudad.php?estado=washington [L,QSA]
+
+Rewriterule ^alaska$ index.php?estado=alaska [L,QSA]
+
+Rewriterule ^delaware$ index.php?estado=delaware [L,QSA]
+
+Rewriterule ^hawaii$ index.php?estado=hawaii [L,QSA]
+
+Rewriterule ^maine$ index.php?estado=maine [L,QSA]
+
+Rewriterule ^montana$ index.php?estado=montana [L,QSA]
+
+Rewriterule ^newhampshire$ index.php?estado=newhampshire [L,QSA]
+
+Rewriterule ^puertorico$ index.php?estado=puertorico [L,QSA]
+
+Rewriterule ^southdakota$ index.php?estado=southdakota [L,QSA]
+
+Rewriterule ^vermont$ index.php?estado=vermont [L,QSA]
+
+Rewriterule ^guammicronesia$ index.php?estado=guammicronesia [L,QSA]
+
+Rewriterule ^wyoming$ index.php?estado=wyoming [L,QSA]
+
+
+ErrorDocument 404 /error/notfound.html
